@@ -10,6 +10,15 @@ import {
   Center,
   Text,
   Link,
+  HStack,
+  Box,
+  Table,
+  Thead,
+  Th,
+  Tbody,
+  Tr,
+  Td,
+  Code,
 } from "@chakra-ui/react";
 import "@fontsource/fira-code";
 
@@ -138,6 +147,18 @@ const theme = extendTheme({
   },
 });
 
+function Header() {
+  return (
+    <HStack mt={16} mb={6}>
+      <Heading>Regex Generator</Heading>
+      <Spacer />
+      <Link href="https://github.com/nishidate-yuki/regex-generator" isExternal>
+        GitHub
+      </Link>
+    </HStack>
+  );
+}
+
 function Footer() {
   return (
     <Center my={16}>
@@ -148,6 +169,67 @@ function Footer() {
         </Link>
       </Text>
     </Center>
+  );
+}
+
+function ManualRow({ func, regex }) {
+  return (
+    <Tr>
+      <Td>
+        <Code background={"none"} color="white" px={2} py={0.5}>
+          {func}
+        </Code>
+      </Td>
+      <Td>
+        <Code background={"none"} color="white" px={2} py={0.5}>
+          {regex}
+        </Code>
+      </Td>
+    </Tr>
+  );
+}
+
+function Manual() {
+  return (
+    <Box>
+      <Heading mt={16} mb={6}>
+        Manual
+      </Heading>
+      <Table variant="unstyled" size="sm">
+        <Thead>
+          <Th>Function</Th>
+          <Th>Regex</Th>
+        </Thead>
+        <Tbody>
+          <ManualRow func="digit()" regex="\d" />
+          <ManualRow func="whitespace()" regex="\s" />
+          <ManualRow func="word()" regex="\w" />
+          <ManualRow func="notDigit()" regex="\D" />
+          <ManualRow func="notWhitespace()" regex="\S" />
+          <ManualRow func="notWord()" regex="\W" />
+          <ManualRow func="zeroOrMore(char)" regex="*" />
+          <ManualRow func="oneOrMore(char)" regex="+" />
+          <ManualRow func="zeroOrOne(char)" regex="?" />
+          <ManualRow func="times(char, num)" regex="{num}" />
+          <ManualRow func="timesLeast(char, num)" regex="{num,}" />
+          <ManualRow
+            func="timesBetween(char, start, end)"
+            regex="{start,end}"
+          />
+          <ManualRow func="any()" regex="." />
+          <ManualRow func="or(first, second)" regex="|" />
+          <ManualRow func="captureGroup(str)" regex="()" />
+          <ManualRow func="groupAt(num)" regex="\num" />
+          <ManualRow func="tab()" regex="\t" />
+          <ManualRow func="newline()" regex="\n" />
+          <ManualRow func="range(start, end)" regex="-" />
+          <ManualRow func="anyOneOf(str)" regex="[]" />
+          <ManualRow func="anyOneOfRange(start, ned)" regex="[-]" />
+          <ManualRow func="startOfLine()" regex="^" />
+          <ManualRow func="endOfLine()" regex="$" />
+        </Tbody>
+      </Table>
+    </Box>
   );
 }
 
@@ -162,7 +244,7 @@ export default function Home() {
       </Head>
 
       <Container maxW="container.md">
-        <Heading my={12}>Regex Generator</Heading>
+        <Header />
         <Textarea
           placeholder="code..."
           fontFamily="Fira Code"
@@ -184,6 +266,8 @@ export default function Home() {
           resize="none"
           rows={6}
         ></Textarea>
+
+        <Manual />
         <Footer />
       </Container>
     </ChakraProvider>
