@@ -8,6 +8,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.7.2",
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@fontsource/azeret-mono": "^4.5.1",
+    "@fontsource/fira-code": "^4.5.2",
+    "framer-motion": "^4.1.17",
     "next": "12.0.4",
     "react": "17.0.2",
     "react-dom": "17.0.2"
