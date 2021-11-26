@@ -7,13 +7,38 @@ import {
   Heading,
   Textarea,
   Spacer,
+  Center,
+  Text,
+  Link,
 } from "@chakra-ui/react";
 import "@fontsource/fira-code";
 
-function any() {
-  return `.`;
+// characters
+function digit() {
+  return `\\d`;
 }
 
+function word() {
+  return `\\w`;
+}
+
+function whitespace() {
+  return `\\s`;
+}
+
+function notDigit() {
+  return `\\D`;
+}
+
+function notWord() {
+  return `\\W`;
+}
+
+function notWhitespace() {
+  return `\\S`;
+}
+
+// quantifiers
 function zeroOrMore(char) {
   return `${char}*`;
 }
@@ -22,18 +47,82 @@ function oneOrMore(char) {
   return `${char}+`;
 }
 
-function range(start, end) {
-  return "";
+function zeroOrOne(char) {
+  return `${char}?`;
 }
 
+function times(char, n) {
+  return `${char}{${n}}`;
+}
+
+function timesLeast(char, n) {
+  return `${char}{${n},}`;
+}
+
+function timesBetween(char, start, end) {
+  return `${char}{${start},${end}}`;
+}
+
+// more
+function any() {
+  return `.`;
+}
+
+// logic
+function or(first, second) {
+  return `${first}|${second}`;
+}
+
+function captureGroup(str) {
+  return `(${str})`;
+}
+
+function groupAt(n) {
+  return `\\${n}`;
+}
+
+// more whitespace
+function tab() {
+  return `\\t`;
+}
+
+function newline() {
+  return `\\n`;
+}
+
+// character classes
+function range(start, end) {
+  return `${start}-${end}`;
+}
+
+function anyOneOf(str) {
+  return `[${str}]`;
+}
+
+function anyOneOfRange(start, end) {
+  return anyOneOf(range(start, end));
+}
+
+// anchors and boundaries
+function startOfLine() {
+  return `^`;
+}
+
+function endOfLine() {
+  return `$`;
+}
+
+// compile
 function compile(code) {
   try {
     return eval(code);
   } catch (e) {
+    console.log(e.message);
     return "";
   }
 }
 
+// app
 const theme = extendTheme({
   styles: {
     global: {
@@ -49,6 +138,19 @@ const theme = extendTheme({
   },
 });
 
+function Footer() {
+  return (
+    <Center my={16}>
+      <Text color={"gray.500"}>
+        © {new Date().getFullYear()} -{" "}
+        <Link href="https://twitter.com/yknsdt" isExternal>
+          Yuki Nishidate
+        </Link>
+      </Text>
+    </Center>
+  );
+}
+
 export default function Home() {
   const [regex, setRegex] = useState("regex");
 
@@ -61,11 +163,12 @@ export default function Home() {
       </Head>
 
       <Container maxW="container.md">
-        <Heading my={8}>Regex Generator</Heading>
+        <Heading my={12}>Regex Generator</Heading>
         <Textarea
-          placeholder="code"
+          placeholder="code..."
           fontFamily="Fira Code"
           resize="none"
+          rows={6}
           onChange={(event) => {
             const value = event.target.value;
             const result = compile(value);
@@ -80,7 +183,9 @@ export default function Home() {
           readOnly={true}
           fontFamily="Fira Code"
           resize="none"
+          rows={6}
         ></Textarea>
+        <Footer />
       </Container>
     </ChakraProvider>
   );
