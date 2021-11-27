@@ -142,8 +142,8 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    heading: "Open Sans",
-    body: "Raleway",
+    heading: "Fira Code",
+    body: "Fira Code",
   },
 });
 
@@ -191,10 +191,7 @@ function ManualRow({ func, regex }) {
 
 function Manual() {
   return (
-    <Box>
-      <Heading mt={16} mb={6}>
-        Manual
-      </Heading>
+    <Box mt={16}>
       <Table variant="unstyled" size="sm">
         <Thead>
           <Th>Function</Th>
@@ -234,19 +231,22 @@ function Manual() {
 }
 
 export default function Home() {
-  const [regex, setRegex] = useState("regex");
+  const [regex, setRegex] = useState(".*");
 
   return (
     <ChakraProvider theme={theme}>
       <Head my={"md"}>
         <title>Regex Generator</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico?" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Regex Generator" />
+        <meta name="twitter:image" content="/favicon.ico?" />
       </Head>
 
       <Container maxW="container.md">
         <Header />
         <Textarea
-          placeholder="code..."
+          placeholder="zeroOrMore( any() )"
           fontFamily="Fira Code"
           resize="none"
           rows={6}
